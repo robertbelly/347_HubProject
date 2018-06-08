@@ -1,7 +1,7 @@
 #!usr/bin/python
 
 #Shawn Martin
-#6/1/18
+#6/7/18
 #EECS 347-2
 
 import spidev
@@ -42,7 +42,6 @@ COMMAND_DELETE = "d"
 
 CHAR_UUIDS = "uuids"
 CHAR_ONOFF = "onoff"
-CHAR_OVERRIDE = "overr"
 CHAR_BATTERY = "batte"
 CHAR_ANALOG_OUT = "anout"
 CHAR_ANALOG_MAX = "anmax"
@@ -60,7 +59,6 @@ CATEGORY_UNKNWN = "unknwn"
 
 device_uuids = ["", "", "", "", "", "", "", ""]
 device_on_off = [0, 0, 0, 0, 0, 0, 0, 0]
-device_override = [0, 0, 0, 0, 0, 0, 0, 0]
 device_battery = [0, 0, 0, 0, 0, 0, 0, 0]
 device_analog_out = [0, 0, 0, 0, 0, 0, 0, 0]
 device_analog_thresh = [0, 0, 0, 0, 0, 0, 0, 0]
@@ -344,7 +342,6 @@ def print_module(module_index):
 
 	print("-----------------------")
 	print("On Off:    " + str(device_on_off[module_index]))
-	print("Override:  " + str(device_override[module_index])) 
 	print("Battery:   " + str(device_battery[module_index]))
 	print("An. Out:   " + str(device_analog_out[module_index]))
 	print("An. Thres: " + str(device_analog_thresh[module_index]))
@@ -396,7 +393,6 @@ def init_table():
 
 	device_uuids = ["", "", "", "", "", "", "", ""]
 	device_on_off = [0, 0, 0, 0, 0, 0, 0, 0]
-	device_override = [0, 0, 0, 0, 0, 0, 0, 0]
 	device_battery = [0, 0, 0, 0, 0, 0, 0, 0]
 	device_analog_out = [0, 0, 0, 0, 0, 0, 0, 0]
 	device_analog_thresh = [0, 0, 0, 0, 0, 0, 0, 0]
@@ -440,19 +436,6 @@ def new_value_set(module_index, characteristic, value):
 			try:
 				device_on_off[module_index] = int(value)
 				send_over_SPI(MAX_ATTEMPTS, COMMAND_SET, module_index, CHAR_ONOFF, device_on_off[module_index])
-				time.sleep(SPI_MESSAGE_DELAY_SEC)
-				return True
-			except ValueError:
-				print("Invalid value")
-				return False
-		else:
-			print("Invalid value")
-			return False
-	elif(characteristic == CHAR_OVERRIDE):
-		if(value == 0 or value == 1):
-			try:
-				device_override[module_index] = int(value)
-				send_over_SPI(MAX_ATTEMPTS, COMMAND_SET, module_index, CHAR_OVERR, device_override[module_index])
 				time.sleep(SPI_MESSAGE_DELAY_SEC)
 				return True
 			except ValueError:
@@ -515,7 +498,7 @@ def init_pairing():
 			init_table()
 			return True
 
-	print("No new devices paired. Pairing process failed.")
+	print("No new devices paired. Pairing process failed due to timeout.")
 	return False
 
 
