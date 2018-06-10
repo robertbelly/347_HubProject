@@ -71,7 +71,8 @@ class MyApp(App):
 
         tb = gui.TabBox(width='100%')
         tb.style['background-color'] = '#BEBEBE'
-        tb.add_tab([wid,buttonContainer], "Home Screen", None)
+        xtab = tb.add_tab([wid,buttonContainer], "Home Screen", None)
+        xtab.style['background-color'] = '#BEBEBE'
 
         vertContainer.append(tb)
 
