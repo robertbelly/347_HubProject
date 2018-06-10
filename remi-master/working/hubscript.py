@@ -8,7 +8,7 @@ import remi.gui as gui
 from remi import start, App
 import threading, time
 from functionsForExample import myrandomfunction,returntime
-# import hub_spi.py as pispi
+#import hub_spi.py as pispi
 
 
 class MyApp(App):
@@ -27,7 +27,7 @@ class MyApp(App):
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         vertContainer.style['text-align'] = 'center'
 
-        wid = gui.VBox(width=300, height=500, margin='0px auto')
+        wid = gui.HBox(width=300, height=200, margin='20px auto')
         wid.style['align-items'] = 'center'
         wid.style['justify-content'] = 'space-around'
         wid.style['font-size'] = '30px'

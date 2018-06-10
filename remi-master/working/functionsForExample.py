@@ -8,5 +8,5 @@ def myrandomfunction():
         return randint(1,9)
 
 def returntime():
-    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.now().strftime('%Y-%m-%d \n %H:%M')
 
