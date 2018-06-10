@@ -23,7 +23,7 @@ class MyApp(App):
     def main(self):
 
         # Make containers
-        vertContainer = gui.Widget(width='80%', layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        vertContainer = gui.Widget(width='100%', layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         vertContainer.style['text-align'] = 'center'
 
@@ -69,12 +69,13 @@ class MyApp(App):
         buttonContainer.append(bt1)
         buttonContainer.append(bt2)
 
+        vertContainer.append([wid,buttonContainer])
+
         tb = gui.TabBox(width='100%')
         tb.style['background-color'] = '#BEBEBE'
-        xtab = tb.add_tab([wid,buttonContainer], "Home Screen", None)
-        xtab.style['background-color'] = '#BEBEBE'
+        tb.add_tab(vertContainer, "Home Screen", None)
 
-        vertContainer.append(tb)
+        # vertContainer.append(tb)
 
 
         # Actions
@@ -88,7 +89,7 @@ class MyApp(App):
         t.start()
 
         # returning the root widget
-        return vertContainer
+        return tb
 
 
     # Functions
