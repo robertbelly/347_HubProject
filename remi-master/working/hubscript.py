@@ -61,10 +61,6 @@ class MyApp(App):
         bt2.style['background-color'] = '#9876aa'
         bt2.style['color'] = '#2b2b2b'
 
-        # Actions
-
-        bt.set_on_click_listener(self.on_button_pressed)
-
 
         # Containers Code
         wid.append(self.lbl)
@@ -73,8 +69,16 @@ class MyApp(App):
         buttonContainer.append(bt1)
         buttonContainer.append(bt2)
 
-        vertContainer.append([wid, buttonContainer])
+        tb = gui.TabBox(width='100%')
+        tb.style['background-color'] = '#BEBEBE'
+        tb.add_tab([wid,buttonContainer], "Home Screen", None)
 
+        vertContainer.append(tb)
+
+
+        # Actions
+
+        bt.set_on_click_listener(self.on_button_pressed, tb)
 
         # Thread code
         self.thread_alive_flag = True
@@ -88,11 +92,13 @@ class MyApp(App):
 
     # Functions
 
-    def on_button_pressed(self, container):
+    def on_button_pressed(self, container, tabbox):
 
-        # On button press, notify that pairing has started
+        # On button press, create new tab for the module
+
         self.newlabel = gui.Label('Pairing initiated', width='80%', height=150, margin='0px auto',style="position: absolute")
-        container.append(self.newlabel)
+        tabbox.add_tab(self.newlabel, "new tab", None)
+        # container.append(self.newlabel)
         # self.newlabel2 = gui.Label('Test', width='80%', height=150, margin='0px auto',style="position: absolute")
 
         # Display the result of the pairing
