@@ -82,6 +82,11 @@ class MyApp(App):
 
         bt.set_on_click_listener(self.on_button_pressed, tb)
 
+        tag1 = gui.Tag(_type='script')
+        tag1.add_child("javascript", """window.onunload=function(e){sendCallback('%s','%s');return "close?";};""" % (
+        str(id(self)), "on_window_close"))
+        wid.add_child("onunloadevent", tag1)
+
         # Thread code
         self.thread_alive_flag = True
         self.my_thread_result = 'n/a'
@@ -119,6 +124,11 @@ class MyApp(App):
 
     def start_thread(self):
         return
+
+    def on_window_close(self):
+        #here you can handle the unload
+        print("app closing")
+        self.close()
 
 if __name__ == "__main__":
     start(MyApp, debug=True, update_interval=.5)
