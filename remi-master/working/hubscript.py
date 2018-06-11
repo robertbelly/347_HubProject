@@ -75,17 +75,9 @@ class MyApp(App):
         tb.style['background-color'] = '#BEBEBE'
         tb.add_tab(vertContainer, "Home Screen", None)
 
-        # vertContainer.append(tb)
-
-
         # Actions
 
-        bt.set_on_click_listener(self.on_button_pressed, tb)
-
-        tag1 = gui.Tag(_type='script')
-        tag1.add_child("javascript", """window.onunload=function(e){sendCallback('%s','%s');return "close?";};""" % (
-        str(id(self)), "on_window_close"))
-        wid.add_child("onunloadevent", tag1)
+        bt.set_on_click_listener(self.sensor_button_pressed, tb)
 
         # Thread code
         self.thread_alive_flag = True
@@ -99,14 +91,44 @@ class MyApp(App):
 
     # Functions
 
-    def on_button_pressed(self, container, tabbox):
+    def sensor_button_pressed(self, container, tabbox):
 
         # On button press, create new tab for the module
 
-        self.newlabel = gui.Label('Pairing initiated', width='80%', height=150, margin='0px auto',style="position: absolute")
-        tabbox.add_tab(self.newlabel, "new tab", None)
-        # container.append(self.newlabel)
-        # self.newlabel2 = gui.Label('Test', width='80%', height=150, margin='0px auto',style="position: absolute")
+        # Subcontainer for the 'pairing initiated box'
+        mainmessageContainer = gui.Widget(width='100%', layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+                                         style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
+        mainmessageContainer.style['text-align'] = 'center'
+        mainmessageContainer.style['align-items'] = 'center'
+        mainmessageContainer.style['justify-content'] = 'space-around'
+        mainmessageContainer.style['font-size'] = '20px'
+
+        self.newlabel = gui.Label('Pairing initiated...', width='60%', height=150, margin='0px auto')#,style="position: absolute")
+
+        buttonBox = gui.HBox(width='80%', height=200, margin='0px auto')
+        buttonBox.style['align-items'] = 'baseline'
+        buttonBox.style['justify-content'] = 'space-around'
+        buttonBox.style['background-color'] = '#BEBEBE'
+
+        button_ReturnToHome = gui.Button('Return to Home Screen', width=200, height=50)
+        button_ReturnToHome.style['margin'] = 'auto 50px'
+        button_ReturnToHome.style['background-color'] = '#9876aa'
+        button_ReturnToHome.style['color'] = '#2b2b2b'
+
+        button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
+        button_DeleteModule.style['margin'] = 'auto 50px'
+        button_DeleteModule.style['background-color'] = '#9876aa'
+        button_DeleteModule.style['color'] = '#2b2b2b'
+
+        button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
+        button_DeleteModule.set_on_click_listener(self.on_bt2_pressed, tabbox, 1)
+
+        buttonBox.append(button_ReturnToHome)
+        buttonBox.append(button_DeleteModule)
+        mainmessageContainer.append([self.newlabel, buttonBox])
+
+        tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
+
 
         # Display the result of the pairing
         pairing_return = pispi.init_pairing()
@@ -115,8 +137,14 @@ class MyApp(App):
                                   style="position: absolute")
         container.append(self.newlabel)
         container.append(self.newlabel2)
-        self.my_thread_result = pairing_return
+        # self.my_thread_result = pairing_return
 
+
+    def on_bt_pressed(self, widget, tabbox, tabIndex):
+        tabbox.select_by_index(tabIndex)
+
+    def on_bt2_pressed(self, widget, tabbox, tabIndex):
+        return
 
     def my_algorithm(self):
         while self.thread_alive_flag:
@@ -125,10 +153,6 @@ class MyApp(App):
     def start_thread(self):
         return
 
-    def on_window_close(self):
-        #here you can handle the unload
-        print("app closing")
-        self.close()
 
 if __name__ == "__main__":
     start(MyApp, debug=True, update_interval=.5)

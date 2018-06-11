@@ -26,10 +26,11 @@ class MyApp(App):
         b3 = gui.Button('Show first tab', width=200, height=30)
 
         tb = gui.TabBox(width='100%')
-        tb.add_tab(b1, 'First', None)
+        tb.add_tab([b1,b2], 'First', None)
 
 
         b1.set_on_click_listener(self.on_bt1_pressed, tb, 0)
+        b2.set_on_click_listener(self.on_bt2_pressed, tb, 0)
 
         vertContainer.append(tb)
 
@@ -39,12 +40,8 @@ class MyApp(App):
         self.newlbl = gui.Label("new tab")
         tabbox.add_tab(self.newlbl, "new tab", None)
 
-    def on_bt2_pressed(self, widget, tabbox, refWidgetTabName):
-        tabbox.select_by_name(refWidgetTabName)
-
-    def on_bt3_pressed(self, widget, tabbox, tabIndex):
-        tabbox.select_by_index(tabIndex)
-
+    def on_bt2_pressed(self, widget, tabbox, refWidgetTab):
+        tabbox.close()
 
 if __name__ == "__main__":
     start(MyApp, title="Tab Demo", standalone=False)
