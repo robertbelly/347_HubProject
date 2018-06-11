@@ -56,7 +56,7 @@ class MyApp(App):
         bt1.style['background-color'] = '#9876aa'
         bt1.style['color'] = '#2b2b2b'
 
-        bt2 = gui.Button('Button 3', width=200, height=50)
+        bt2 = gui.Button('Shut off', width=200, height=50)
         bt2.style['margin'] = 'auto 50px'
         bt2.style['background-color'] = '#9876aa'
         bt2.style['color'] = '#2b2b2b'
@@ -79,6 +79,7 @@ class MyApp(App):
 
         bt.set_on_click_listener(self.sensor_button_pressed, tb)
         bt1.set_on_click_listener(self.onoff_button_pressed, tb)
+        bt2.set_on_click_listener(self.shutdown_button)
 
         # Thread code
         self.thread_alive_flag = True
@@ -211,6 +212,9 @@ class MyApp(App):
 
     def turn_on_button(self, tabIndex):
         pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 1)
+
+    def shutdown_button(self, _):
+        self.close()
 
     def my_algorithm(self):
         while self.thread_alive_flag:
