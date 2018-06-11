@@ -7,7 +7,7 @@ implementing the hub functions
 import remi.gui as gui
 from remi import start, App
 import threading, time
-from functionsForExample import myrandomfunction,returntime
+from functionsForExample import myrandomfunction,returntime, init_test
 #import hub_spi as pispi
 
 
@@ -107,15 +107,16 @@ class MyApp(App):
 
         # On button press, create new tab for the module
         self.process_label.set_text("Initiated sensor pairing...")
+        self.do_gui_update()
         # Subcontainer for the 'pairing initiated box'
-        mainmessageContainer = gui.Widget(width='100%', height=250, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        mainmessageContainer = gui.Widget(width='100%', height=300, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         mainmessageContainer.style['text-align'] = 'center'
         mainmessageContainer.style['align-items'] = 'center'
         mainmessageContainer.style['justify-content'] = 'space-around'
         mainmessageContainer.style['font-size'] = '20px'
 
-        self.newlabel = gui.Label('Sensor Module', width='60%', height=50, margin='0px auto')#,style="position: absolute")
+        self.newlabel = gui.Label('Sensor Module', width='60%', height=150, margin='0px auto')#,style="position: absolute")
 
         buttonBox = gui.HBox(width='80%', height=100, margin='0px auto')
         buttonBox.style['align-items'] = 'center'
@@ -127,6 +128,18 @@ class MyApp(App):
         button_ReturnToHome.style['background-color'] = '#9876aa'
         button_ReturnToHome.style['color'] = '#2b2b2b'
 
+        labelContainer = gui.HBox(width='80%', height=50, margin='0px auto')
+        labelContainer.style['align-items'] = 'baseline'
+        labelContainer.style['justify-content'] = 'space-around'
+        labelContainer.style['background-color'] = '#BEBEBE'
+        labelContainer.style['text-align'] = 'center'
+
+        self.sensorlabel = gui.Label('sensor value', width='80%', height=100, margin='0px auto', style="position: absolute")
+        self.sensorlabel.style['margin'] = 'auto'
+        self.sensorlabel.style['font-weight'] = 'bold'
+        self.sensorlabel.style['color'] = '#000000'
+        labelContainer.append(self.sensorlabel)
+
         # button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
         # button_DeleteModule.style['margin'] = 'auto 50px'
         # button_DeleteModule.style['background-color'] = '#9876aa'
@@ -137,26 +150,30 @@ class MyApp(App):
 
         buttonBox.append(button_ReturnToHome)
         # buttonBox.append(button_DeleteModule)
-        mainmessageContainer.append([self.newlabel, buttonBox])
-
-        tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
+        mainmessageContainer.append([self.newlabel, labelContainer, buttonBox])
 
         # Display the result of the pairing
-        pairing_return = pispi.init_pairing()
+
+        pairing_return = init_test()
         self.newlabel2 = pairing_return
-        self.newlabel = gui.Label('', width='80%', height=150, margin='0px auto',
-                                  style="position: absolute")
-        container.append(self.newlabel)
-        container.append(self.newlabel2)
-        # self.my_thread_result = pairing_return
+        if pairing_return:
+            self.process_label.set_text("Pairing successful")
+            tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
+        else:
+            self.process_label.set_text("Pairing failed")
+        self.do_gui_update()
+        time.sleep(3)
+        self.process_label.set_text("No current process")
+        self.do_gui_update()
+
 
     def onoff_button_pressed(self, container, tabbox):
 
         # On button press, create new tab for the module
         self.process_label.set_text("Initiated On/Off pairing...")
-
+        self.do_gui_update()
         # Subcontainer for the info display box
-        mainmessageContainer = gui.Widget(width='100%', height=250, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        mainmessageContainer = gui.Widget(width='100%', height=300, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         mainmessageContainer.style['text-align'] = 'center'
         mainmessageContainer.style['align-items'] = 'center'
@@ -185,6 +202,18 @@ class MyApp(App):
         button_ReturnToHome.style['background-color'] = '#9876aa'
         button_ReturnToHome.style['color'] = '#2b2b2b'
 
+        labelContainer = gui.HBox(width='80%', height=50, margin='0px auto')
+        labelContainer.style['align-items'] = 'baseline'
+        labelContainer.style['justify-content'] = 'space-around'
+        labelContainer.style['background-color'] = '#BEBEBE'
+        labelContainer.style['text-align'] = 'center'
+
+        self.onofflabel = gui.Label('On/Off value', width='80%', height=100, margin='0px auto', style="position: absolute")
+        self.onofflabel.style['margin'] = 'auto'
+        self.onofflabel.style['font-weight'] = 'bold'
+        self.onofflabel.style['color'] = '#000000'
+        labelContainer.append(self.onofflabel)
+
         # button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
         # button_DeleteModule.style['margin'] = 'auto 50px'
         # button_DeleteModule.style['background-color'] = '#9876aa'
@@ -199,27 +228,31 @@ class MyApp(App):
         buttonBox.append(button_OFF)
         buttonBox.append(button_ReturnToHome)
         # buttonBox.append(button_DeleteModule)
-        mainmessageContainer.append([self.newlabel, buttonBox])
-
-        tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
-
+        mainmessageContainer.append([self.newlabel, labelContainer, buttonBox])
 
         # Display the result of the pairing
 
-        pairing_return = pispi.init_pairing()
+        pairing_return = init_test()
         self.newlabel2 = pairing_return
-        self.newlabel = gui.Label('', width='80%', height=150, margin='0px auto',
-                                  style="position: absolute")
+        if pairing_return:
+            self.process_label.set_text("Pairing successful")
+            tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
+        else:
+            self.process_label.set_text("Pairing failed")
+        self.do_gui_update()
+        time.sleep(3)
+        self.process_label.set_text("No current process")
+        self.do_gui_update()
 
 
     def on_bt_pressed(self, widget, tabbox, tabIndex):
         tabbox.select_by_index(tabIndex)
 
     def turn_off_button(self, emitter, tabIndex):
-        pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 0)
+        return
 
     def turn_on_button(self, emitter, tabIndex):
-        pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 1)
+        return
 
     def shutdown_button(self, _):
         self.process_label.set_text("Bye!")
