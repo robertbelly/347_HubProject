@@ -78,6 +78,7 @@ class MyApp(App):
         # Actions
 
         bt.set_on_click_listener(self.sensor_button_pressed, tb)
+        bt1.set_on_click_listener(self.onoff_button_pressed, tb)
 
         # Thread code
         self.thread_alive_flag = True
@@ -115,19 +116,81 @@ class MyApp(App):
         button_ReturnToHome.style['background-color'] = '#9876aa'
         button_ReturnToHome.style['color'] = '#2b2b2b'
 
-        button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
-        button_DeleteModule.style['margin'] = 'auto 50px'
-        button_DeleteModule.style['background-color'] = '#9876aa'
-        button_DeleteModule.style['color'] = '#2b2b2b'
+        # button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
+        # button_DeleteModule.style['margin'] = 'auto 50px'
+        # button_DeleteModule.style['background-color'] = '#9876aa'
+        # button_DeleteModule.style['color'] = '#2b2b2b'
 
         button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
-        button_DeleteModule.set_on_click_listener(self.on_bt2_pressed, tabbox, 1)
+        # button_DeleteModule.set_on_click_listener(self.on_bt2_pressed, tabbox, 1)
 
         buttonBox.append(button_ReturnToHome)
-        buttonBox.append(button_DeleteModule)
+        # buttonBox.append(button_DeleteModule)
         mainmessageContainer.append([self.newlabel, buttonBox])
 
         tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
+
+
+        # Display the result of the pairing
+        pairing_return = pispi.init_pairing()
+        self.newlabel2 = pairing_return
+        self.newlabel = gui.Label('', width='80%', height=150, margin='0px auto',
+                                  style="position: absolute")
+        container.append(self.newlabel)
+        container.append(self.newlabel2)
+        # self.my_thread_result = pairing_return
+
+    def onoff_button_pressed(self, container, tabbox):
+
+        # On button press, create new tab for the module
+
+        # Subcontainer for the 'pairing initiated box'
+        mainmessageContainer = gui.Widget(width='100%', layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+                                         style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
+        mainmessageContainer.style['text-align'] = 'center'
+        mainmessageContainer.style['align-items'] = 'center'
+        mainmessageContainer.style['justify-content'] = 'space-around'
+        mainmessageContainer.style['font-size'] = '20px'
+
+        self.newlabel = gui.Label('Pairing initiated...', width='60%', height=150, margin='0px auto')#,style="position: absolute")
+
+        buttonBox = gui.HBox(width='80%', height=200, margin='0px auto')
+        buttonBox.style['align-items'] = 'baseline'
+        buttonBox.style['justify-content'] = 'space-around'
+        buttonBox.style['background-color'] = '#BEBEBE'
+
+        button_ON = gui.Button('Turn ON', width=200, height=50)
+        button_ON.style['margin'] = 'auto 50px'
+        button_ON.style['background-color'] = '#9876aa'
+        button_ON.style['color'] = '#2b2b2b'
+
+        button_OFF = gui.Button('Turn OFF', width=200, height=50)
+        button_OFF.style['margin'] = 'auto 50px'
+        button_OFF.style['background-color'] = '#9876aa'
+        button_OFF.style['color'] = '#2b2b2b'
+
+        button_ReturnToHome = gui.Button('Return to Home Screen', width=200, height=50)
+        button_ReturnToHome.style['margin'] = 'auto 50px'
+        button_ReturnToHome.style['background-color'] = '#9876aa'
+        button_ReturnToHome.style['color'] = '#2b2b2b'
+
+        # button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
+        # button_DeleteModule.style['margin'] = 'auto 50px'
+        # button_DeleteModule.style['background-color'] = '#9876aa'
+        # button_DeleteModule.style['color'] = '#2b2b2b'
+
+        button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
+        button_ON.set_on_click_listener(self.turn_on_button, 2)
+        button_OFF.set_on_click_listener(self.turn_off_button, 2)
+        # button_DeleteModule.set_on_click_listener(self.on_bt2_pressed, tabbox, 1)
+
+        buttonBox.append(button_ON)
+        buttonBox.append(button_OFF)
+        buttonBox.append(button_ReturnToHome)
+        # buttonBox.append(button_DeleteModule)
+        mainmessageContainer.append([self.newlabel, buttonBox])
+
+        tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
 
 
         # Display the result of the pairing
@@ -143,8 +206,11 @@ class MyApp(App):
     def on_bt_pressed(self, widget, tabbox, tabIndex):
         tabbox.select_by_index(tabIndex)
 
-    def on_bt2_pressed(self, widget, tabbox, tabIndex):
-        return
+    def turn_off_button(self, tabIndex):
+        pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 0)
+
+    def turn_on_button(self, tabIndex):
+        pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 1)
 
     def my_algorithm(self):
         while self.thread_alive_flag:
