@@ -195,22 +195,22 @@ class MyApp(App):
 
 
         # Display the result of the pairing
+
         pairing_return = pispi.init_pairing()
         self.newlabel2 = pairing_return
         self.newlabel = gui.Label('', width='80%', height=150, margin='0px auto',
                                   style="position: absolute")
-        container.append(self.newlabel)
-        container.append(self.newlabel2)
+
         # self.my_thread_result = pairing_return
 
 
     def on_bt_pressed(self, widget, tabbox, tabIndex):
         tabbox.select_by_index(tabIndex)
 
-    def turn_off_button(self, tabIndex):
+    def turn_off_button(self, emitter, tabIndex):
         pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 0)
 
-    def turn_on_button(self, tabIndex):
+    def turn_on_button(self, emitter, tabIndex):
         pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 1)
 
     def shutdown_button(self, _):

@@ -59,42 +59,15 @@ class MyApp(App):
         bt1.set_on_click_listener(self.off_button_pressed)
         bt2.set_on_click_listener(self.add_field)
 
-
         horizontalContainer.append([wid])
-
-        b1 = gui.Button('Show second tab', width=200, height=30)
-
-        tb = gui.TabBox(width='80%')
-        tb.add_tab(b1, 'First', None)
-
-        b2 = gui.Button('Show third tab', width=200, height=30)
-        tb.add_tab(b2, 'Second', None)
-
-        b3 = gui.Button('Show first tab', width=200, height=30)
-        tb.add_tab(b3, 'Third', None)
-
-        b1.set_on_click_listener(self.on_bt1_pressed, tb, b2)
-        b2.set_on_click_listener(self.on_bt2_pressed, tb, 'Third')
-        b3.set_on_click_listener(self.on_bt3_pressed, tb, 0)
-
-        horizontalContainer.append(tb)
 
         # returning the root widget
         return horizontalContainer
 
-
-    def on_bt1_pressed(self, widget, tabbox, refWidgetTab):
-        tabbox.select_by_widget(refWidgetTab)
-
-    def on_bt2_pressed(self, widget, tabbox, refWidgetTabName):
-        tabbox.select_by_name(refWidgetTabName)
-
-    def on_bt3_pressed(self, widget, tabbox, tabIndex):
-        tabbox.select_by_index(tabIndex)
-
     def my_algorithm(self):
+        but = gui.Button('new button', width=200, height=30)
         while self.thread_alive_flag:
-            self.my_thread_result = returntime()
+            self.my_thread_result = myrandomfunction()
 
     def start_thread(self):
         t = threading.Thread(target=self.my_algorithm)
