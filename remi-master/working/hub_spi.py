@@ -506,39 +506,39 @@ def init_pairing():
 
 init_table() #fill table with info
 
-time.sleep(3)
-
-init_pairing()
-
-time.sleep(1)
-
-new_value_set(0, CHAR_ONOFF, 1)
-
-time.sleep(2)
-
-read_chars(0)
-
-while True:
-
-	read_chars(0)
-	check_uuid()
-
-	print_all_modules()
-
-	if(SHOW_STATS):
-		loop_times += 1
-		print("Successful messages: " + str(successful_messages))
-		print("Total messages:      " + str(total_messages))
-		print("Loop times:          " + str(loop_times))
-		if(total_messages > 0):
-			ratio = successful_messages/total_messages * 100
-			avg_loops = total_messages/loop_times
-			print("Success rate:        " + str(ratio) + "%")
-			print("Average per loop:    " + str(avg_loops))
-
-		print("")
-
-spi.close()
-print("Finished SPI")
+# time.sleep(3)
+#
+# init_pairing()
+#
+# time.sleep(1)
+#
+# new_value_set(0, CHAR_ONOFF, 1)
+#
+# time.sleep(2)
+#
+# read_chars(0)
+#
+# while True:
+#
+# 	read_chars(0)
+# 	check_uuid()
+#
+# 	print_all_modules()
+#
+# 	if(SHOW_STATS):
+# 		loop_times += 1
+# 		print("Successful messages: " + str(successful_messages))
+# 		print("Total messages:      " + str(total_messages))
+# 		print("Loop times:          " + str(loop_times))
+# 		if(total_messages > 0):
+# 			ratio = successful_messages/total_messages * 100
+# 			avg_loops = total_messages/loop_times
+# 			print("Success rate:        " + str(ratio) + "%")
+# 			print("Average per loop:    " + str(avg_loops))
+#
+# 		print("")
+#
+# spi.close()
+# print("Finished SPI")
 
 #End Main Function

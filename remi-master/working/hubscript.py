@@ -8,7 +8,7 @@ import remi.gui as gui
 from remi import start, App
 import threading, time
 from functionsForExample import myrandomfunction,returntime
-#import hub_spi.py as pispi
+#import hub_spi as pispi
 
 
 class MyApp(App):
@@ -23,25 +23,32 @@ class MyApp(App):
     def main(self):
 
         # Make containers
-        vertContainer = gui.Widget(width='100%', layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        vertContainer = gui.Widget(width='100%', height=300, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         vertContainer.style['text-align'] = 'center'
 
-        wid = gui.HBox(width=300, height=200, margin='20px auto')
+        wid = gui.HBox(width=300, height=150, margin='0px auto')
         wid.style['align-items'] = 'center'
-        wid.style['justify-content'] = 'space-around'
+        wid.style['justify-content'] = 'baseline'
         wid.style['font-size'] = '30px'
         wid.style['background-color'] = '#BEBEBE'
 
-        buttonContainer = gui.HBox(width='80%', height=200, margin='0px auto')
+        buttonContainer = gui.HBox(width='80%', height=100, margin='0px auto')
         buttonContainer.style['align-items'] = 'baseline'
         buttonContainer.style['justify-content'] = 'space-around'
         buttonContainer.style['background-color'] = '#BEBEBE'
+        buttonContainer.style['text-align'] = 'center'
+
+        labelContainer = gui.HBox(width='80%', height=50, margin='0px auto')
+        labelContainer.style['align-items'] = 'baseline'
+        labelContainer.style['justify-content'] = 'space-around'
+        labelContainer.style['background-color'] = '#BEBEBE'
+        labelContainer.style['text-align'] = 'center'
 
         # Components
-        self.img = gui.Image('/res/wildcat.png', height=150, margin='0px auto')
+        #self.img = gui.Image('/res/wildcat.png', height=150, margin='0px auto')
 
-        self.lbl = gui.Label('', width='80%', height=150, margin='0px auto',style="position: absolute")
+        self.lbl = gui.Label('', width='80%', height=100, margin='0px auto',style="position: absolute")
         self.lbl.style['margin'] = 'auto'
         self.lbl.style['font-weight'] = 'bold'
         self.lbl.style['color'] = '#000000'
@@ -61,15 +68,18 @@ class MyApp(App):
         bt2.style['background-color'] = '#9876aa'
         bt2.style['color'] = '#2b2b2b'
 
+        current_process = "No current process"
+        self.process_label = gui.Label(current_process, width='80%', height=50, margin='0px auto',style="position: absolute")
+        labelContainer.append(self.process_label)
 
         # Containers Code
         wid.append(self.lbl)
-        wid.append(self.img)
+        #wid.append(self.img)
         buttonContainer.append(bt)
         buttonContainer.append(bt1)
         buttonContainer.append(bt2)
 
-        vertContainer.append([wid,buttonContainer])
+        vertContainer.append([wid,labelContainer,buttonContainer])
 
         tb = gui.TabBox(width='100%')
         tb.style['background-color'] = '#BEBEBE'
@@ -96,19 +106,19 @@ class MyApp(App):
     def sensor_button_pressed(self, container, tabbox):
 
         # On button press, create new tab for the module
-
+        self.process_label.set_text("Initiated sensor pairing...")
         # Subcontainer for the 'pairing initiated box'
-        mainmessageContainer = gui.Widget(width='100%', layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        mainmessageContainer = gui.Widget(width='100%', height=250, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         mainmessageContainer.style['text-align'] = 'center'
         mainmessageContainer.style['align-items'] = 'center'
         mainmessageContainer.style['justify-content'] = 'space-around'
         mainmessageContainer.style['font-size'] = '20px'
 
-        self.newlabel = gui.Label('Pairing initiated...', width='60%', height=150, margin='0px auto')#,style="position: absolute")
+        self.newlabel = gui.Label('Sensor Module', width='60%', height=50, margin='0px auto')#,style="position: absolute")
 
-        buttonBox = gui.HBox(width='80%', height=200, margin='0px auto')
-        buttonBox.style['align-items'] = 'baseline'
+        buttonBox = gui.HBox(width='80%', height=100, margin='0px auto')
+        buttonBox.style['align-items'] = 'center'
         buttonBox.style['justify-content'] = 'space-around'
         buttonBox.style['background-color'] = '#BEBEBE'
 
@@ -131,7 +141,6 @@ class MyApp(App):
 
         tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
 
-
         # Display the result of the pairing
         pairing_return = pispi.init_pairing()
         self.newlabel2 = pairing_return
@@ -144,19 +153,19 @@ class MyApp(App):
     def onoff_button_pressed(self, container, tabbox):
 
         # On button press, create new tab for the module
-
+        self.process_label.set_text("Initiated On/Off pairing...")
         # Subcontainer for the 'pairing initiated box'
-        mainmessageContainer = gui.Widget(width='100%', layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        mainmessageContainer = gui.Widget(width='100%', height=250, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         mainmessageContainer.style['text-align'] = 'center'
         mainmessageContainer.style['align-items'] = 'center'
         mainmessageContainer.style['justify-content'] = 'space-around'
         mainmessageContainer.style['font-size'] = '20px'
 
-        self.newlabel = gui.Label('Pairing initiated...', width='60%', height=150, margin='0px auto')#,style="position: absolute")
+        self.newlabel = gui.Label('On/Off Module', width='60%', height=150, margin='0px auto')#,style="position: absolute")
 
-        buttonBox = gui.HBox(width='80%', height=200, margin='0px auto')
-        buttonBox.style['align-items'] = 'baseline'
+        buttonBox = gui.HBox(width='80%', height=100, margin='0px auto')
+        buttonBox.style['align-items'] = 'center'
         buttonBox.style['justify-content'] = 'space-around'
         buttonBox.style['background-color'] = '#BEBEBE'
 
@@ -214,6 +223,7 @@ class MyApp(App):
         pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 1)
 
     def shutdown_button(self, _):
+        self.process_label.set_text("Bye!")
         self.close()
 
     def my_algorithm(self):
