@@ -208,6 +208,13 @@ class MyApp(App):
         button_ReturnToHome.style['background-color'] = '#9876aa'
         button_ReturnToHome.style['color'] = '#2b2b2b'
 
+        labelContainer = gui.HBox(width='80%', height=50, margin='0px auto')
+        labelContainer.style['align-items'] = 'baseline'
+        labelContainer.style['justify-content'] = 'space-around'
+        labelContainer.style['background-color'] = '#BEBEBE'
+        labelContainer.style['text-align'] = 'center'
+        labelContainer.append(self.sensorlabel)
+
         button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
         button_ON.set_on_click_listener(self.turn_on_button, 2)
         button_OFF.set_on_click_listener(self.turn_off_button, 2)
