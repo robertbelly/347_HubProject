@@ -231,7 +231,7 @@ class MyApp(App):
         if pairing_return:
             self.process_label.set_text("Pairing successful")
             self.COUNTER = self.COUNTER + 1
-            tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
+            tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
         else:
             self.process_label.set_text("Pairing failed")
         self.do_gui_update()
