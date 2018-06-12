@@ -160,7 +160,6 @@ class MyApp(App):
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
-            self.COUNTER = self.COUNTER + 1
             tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
         else:
             self.process_label.set_text("Pairing failed")
@@ -230,7 +229,6 @@ class MyApp(App):
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
-            #self.COUNTER = self.COUNTER + 1
             self.module_index = pispi.get_index()
             tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
         else:
@@ -245,11 +243,12 @@ class MyApp(App):
         tabbox.select_by_index(tabIndex)
 
     def turn_off_button(self, emitter, tabIndex):
-        module_index = pispi.get_index()
+        print(self.module_index)
         pispi.new_value_set(self.module_index, pispi.CHAR_ONOFF, 0)
         self.onofflabel.set_text("Current status: Off")
 
     def turn_on_button(self, emitter, tabIndex):
+        print(self.module_index)
         pispi.new_value_set(self.module_index, pispi.CHAR_ONOFF, 1)
         self.onofflabel.set_text("Current status: On")
 
