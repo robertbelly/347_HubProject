@@ -18,6 +18,7 @@ class MyApp(App):
 
     def idle(self):
         self.lbl.set_text(str(self.my_thread_result))
+        self.sensorlabel.set_text("Sensor value: " + str(self.my_thread_result2))
 
 
     def main(self):
@@ -140,16 +141,9 @@ class MyApp(App):
         self.sensorlabel.style['color'] = '#000000'
         labelContainer.append(self.sensorlabel)
 
-        # button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
-        # button_DeleteModule.style['margin'] = 'auto 50px'
-        # button_DeleteModule.style['background-color'] = '#9876aa'
-        # button_DeleteModule.style['color'] = '#2b2b2b'
-
         button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
-        # button_DeleteModule.set_on_click_listener(self.on_bt2_pressed, tabbox, 1)
 
         buttonBox.append(button_ReturnToHome)
-        # buttonBox.append(button_DeleteModule)
         mainmessageContainer.append([self.newlabel, labelContainer, buttonBox])
 
         # Display the result of the pairing
@@ -165,6 +159,10 @@ class MyApp(App):
         time.sleep(3)
         self.process_label.set_text("No current process")
         self.do_gui_update()
+
+        t2 = threading.Thread(target=self.my_2algorithm)
+        t2.start()
+        #self.sensorlabel.set_text(self.my_thread_result2)
 
 
     def onoff_button_pressed(self, container, tabbox):
@@ -214,20 +212,13 @@ class MyApp(App):
         self.onofflabel.style['color'] = '#000000'
         labelContainer.append(self.onofflabel)
 
-        # button_DeleteModule = gui.Button('Delete Module', width=200, height=50)
-        # button_DeleteModule.style['margin'] = 'auto 50px'
-        # button_DeleteModule.style['background-color'] = '#9876aa'
-        # button_DeleteModule.style['color'] = '#2b2b2b'
-
         button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
         button_ON.set_on_click_listener(self.turn_on_button, 2)
         button_OFF.set_on_click_listener(self.turn_off_button, 2)
-        # button_DeleteModule.set_on_click_listener(self.on_bt2_pressed, tabbox, 1)
 
         buttonBox.append(button_ON)
         buttonBox.append(button_OFF)
         buttonBox.append(button_ReturnToHome)
-        # buttonBox.append(button_DeleteModule)
         mainmessageContainer.append([self.newlabel, labelContainer, buttonBox])
 
         # Display the result of the pairing
@@ -237,6 +228,7 @@ class MyApp(App):
         if pairing_return:
             self.process_label.set_text("Pairing successful")
             tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
+            self.onofflabel.set_text(self.my_thread_result)
         else:
             self.process_label.set_text("Pairing failed")
         self.do_gui_update()
@@ -248,22 +240,37 @@ class MyApp(App):
     def on_bt_pressed(self, widget, tabbox, tabIndex):
         tabbox.select_by_index(tabIndex)
 
+
     def turn_off_button(self, emitter, tabIndex):
-        return
+        self.onofflabel.set_text("Current status: Off")
+
 
     def turn_on_button(self, emitter, tabIndex):
-        return
+        self.onofflabel.set_text("Current status: On")
+
 
     def shutdown_button(self, _):
         self.process_label.set_text("Bye!")
+        self.do_gui_update()
         self.close()
+
 
     def my_algorithm(self):
         while self.thread_alive_flag:
             self.my_thread_result = returntime()
 
+
+    def my_2algorithm(self):
+        while self.thread_alive_flag:
+            self.my_thread_result2 = myrandomfunction()
+            self.do_gui_update()
+
+
     def start_thread(self):
-        return
+        self.thread_alive_flag = True
+        self.my_thread_result = 'n/a'
+        t = threading.Thread(target=self.my_algorithm)
+        t.start()
 
 
 if __name__ == "__main__":
