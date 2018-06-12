@@ -229,7 +229,8 @@ class MyApp(App):
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
-            self.module_index = pispi.get_index()
+            pispi.get_index()
+            self.module_index = pispi.index_val
             tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
         else:
             self.process_label.set_text("Pairing failed")

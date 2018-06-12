@@ -95,7 +95,7 @@ def send_string(spi_str):
 
 	output_str = output_str[:output_eot+1]
 
-        print(">>>In: " + str(output) + " (" + str(output_str) + ")")
+	print(">>>In: " + str(output) + " (" + str(output_str) + ")")
 
 	total_messages += 1
 
@@ -217,7 +217,7 @@ def check_index():
 
 	index = str(output_str[:output_eot])
 
-	if(index >= 0):
+	if(int(index) >= 0):
 		index_val = int(index) - 1
 		#print("index: " + str(index_val))
 		return True
