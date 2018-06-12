@@ -244,11 +244,13 @@ class MyApp(App):
         tabbox.select_by_index(tabIndex)
 
     def turn_off_button(self, emitter, tabIndex):
-        pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 0)
+        module_index = pispi.get_index()
+        pispi.new_value_set(module_index, pispi.CHAR_ONOFF, 0)
         self.onofflabel.set_text("Current status: Off")
 
     def turn_on_button(self, emitter, tabIndex):
-        pispi.new_value_set(tabIndex, pispi.CHAR_ONOFF, 1)
+        module_index = pispi.get_index()
+        pispi.new_value_set(module_index, pispi.CHAR_ONOFF, 1)
         self.onofflabel.set_text("Current status: On")
 
     def shutdown_button(self, _):
