@@ -226,17 +226,16 @@ class MyApp(App):
 
         # Display the result of the pairing
 
-        pairing_return = init_test()
+        pairing_return = pispi.init_pairing()
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
             self.COUNTER = self.COUNTER + 1
-            tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
-            self.onofflabel.set_text(self.my_thread_result)
+            tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
         else:
             self.process_label.set_text("Pairing failed")
         self.do_gui_update()
-        time.sleep(3)
+        time.sleep(2)
         self.process_label.set_text("No current process")
         self.do_gui_update()
 
