@@ -69,6 +69,17 @@ class MyApp(App):
         bt2.style['background-color'] = '#9876aa'
         bt2.style['color'] = '#2b2b2b'
 
+        self.sensorlabel = gui.Label('sensor value', width='80%', height=100, margin='0px auto',
+                                     style="position: absolute")
+        self.sensorlabel.style['margin'] = 'auto'
+        self.sensorlabel.style['font-weight'] = 'bold'
+        self.sensorlabel.style['color'] = '#000000'
+
+        self.onofflabel = gui.Label('On/Off value', width='80%', height=100, margin='0px auto', style="position: absolute")
+        self.onofflabel.style['margin'] = 'auto'
+        self.onofflabel.style['font-weight'] = 'bold'
+        self.onofflabel.style['color'] = '#000000'
+
         current_process = "No current process"
         self.process_label = gui.Label(current_process, width='80%', height=50, margin='0px auto',style="position: absolute")
         labelContainer.append(self.process_label)
@@ -95,6 +106,7 @@ class MyApp(App):
         # Thread code
         self.thread_alive_flag = True
         self.my_thread_result = 'n/a'
+        self.my_thread_result2 = 'n/a'
         t = threading.Thread(target=self.my_algorithm)
         t.start()
 
@@ -134,11 +146,6 @@ class MyApp(App):
         labelContainer.style['justify-content'] = 'space-around'
         labelContainer.style['background-color'] = '#BEBEBE'
         labelContainer.style['text-align'] = 'center'
-
-        self.sensorlabel = gui.Label('sensor value', width='80%', height=100, margin='0px auto', style="position: absolute")
-        self.sensorlabel.style['margin'] = 'auto'
-        self.sensorlabel.style['font-weight'] = 'bold'
-        self.sensorlabel.style['color'] = '#000000'
         labelContainer.append(self.sensorlabel)
 
         button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
@@ -205,11 +212,6 @@ class MyApp(App):
         labelContainer.style['justify-content'] = 'space-around'
         labelContainer.style['background-color'] = '#BEBEBE'
         labelContainer.style['text-align'] = 'center'
-
-        self.onofflabel = gui.Label('On/Off value', width='80%', height=100, margin='0px auto', style="position: absolute")
-        self.onofflabel.style['margin'] = 'auto'
-        self.onofflabel.style['font-weight'] = 'bold'
-        self.onofflabel.style['color'] = '#000000'
         labelContainer.append(self.onofflabel)
 
         button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
