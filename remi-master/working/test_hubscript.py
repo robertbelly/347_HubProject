@@ -110,6 +110,8 @@ class MyApp(App):
         t = threading.Thread(target=self.my_algorithm)
         t.start()
 
+        self.COUNTER = 0
+
         # returning the root widget
         return tb
 
@@ -159,6 +161,7 @@ class MyApp(App):
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
+            self.COUNTER = self.COUNTER + 1
             tabbox.add_tab(mainmessageContainer, "Sensor Module", None)
         else:
             self.process_label.set_text("Pairing failed")
@@ -229,6 +232,7 @@ class MyApp(App):
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
+            self.COUNTER = self.COUNTER + 1
             tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
             self.onofflabel.set_text(self.my_thread_result)
         else:
@@ -264,7 +268,7 @@ class MyApp(App):
 
     def my_2algorithm(self):
         while self.thread_alive_flag:
-            self.my_thread_result2 = myrandomfunction()
+            self.my_thread_result2 = myrandomfunction(self.COUNTER)
             self.do_gui_update()
 
 
