@@ -266,6 +266,7 @@ class MyApp(App):
     def my_algorithm2(self):
         while self.thread_alive_flag:
             self.my_thread_result = myrandomfunction()
+            self.do_gui_update()
 
     def my_2algorithm(self):
         while self.thread_alive_flag:
