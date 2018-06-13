@@ -124,21 +124,21 @@ class MyApp(App):
         self.process_label.set_text("Initiated sensor pairing...")
         self.do_gui_update()
         # Subcontainer for the 'pairing initiated box'
-        mainmessageContainer = gui.Widget(width='100%', height=250, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        mainmessageContainer = gui.Widget(width='100%', height=300, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         mainmessageContainer.style['text-align'] = 'center'
         mainmessageContainer.style['align-items'] = 'center'
         mainmessageContainer.style['justify-content'] = 'space-around'
         mainmessageContainer.style['font-size'] = '20px'
 
-        self.newlabel = gui.Label('Sensor Module', width='60%', height=50, margin='0px auto')#,style="position: absolute")
+        self.newlabel = gui.Label('Sensor Module', width='60%', height=150, margin='0px auto')#,style="position: absolute")
 
         buttonBox = gui.HBox(width='80%', height=100, margin='0px auto')
         buttonBox.style['align-items'] = 'center'
         buttonBox.style['justify-content'] = 'space-around'
         buttonBox.style['background-color'] = '#BEBEBE'
 
-        button_ReturnToHome = gui.Button('Return to Home Screen', width=200, height=50)
+        button_ReturnToHome = gui.Button('Return to Home Screen', width=100, height=50)
         button_ReturnToHome.style['margin'] = 'auto 50px'
         button_ReturnToHome.style['background-color'] = '#9876aa'
         button_ReturnToHome.style['color'] = '#2b2b2b'
@@ -179,7 +179,7 @@ class MyApp(App):
         self.process_label.set_text("Initiated On/Off pairing...")
         self.do_gui_update()
         # Subcontainer for the info display box
-        mainmessageContainer = gui.Widget(width='100%', height=250, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
+        mainmessageContainer = gui.Widget(width='100%', height=300, layout_orientation=gui.Widget.LAYOUT_VERTICAL, margin='0px auto',
                                          style={'display': 'block', 'overflow': 'auto', 'background-color': '#BEBEBE'})
         mainmessageContainer.style['text-align'] = 'center'
         mainmessageContainer.style['align-items'] = 'center'
@@ -265,7 +265,7 @@ class MyApp(App):
 
     def my_algorithm2(self):
         while self.thread_alive_flag:
-            self.my_thread_result = myrandomfunction()
+            self.my_thread_result2 = myrandomfunction()
             self.do_gui_update()
 
     def my_2algorithm(self):
