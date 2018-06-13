@@ -7,7 +7,7 @@ implementing the hub functions
 import remi.gui as gui
 from remi import start, App
 import threading, time
-from functionsForExample import myrandomfunction,returntime
+from functionsForExample import myrandomfunction,returntime, init_test
 import hub_spi as pispi
 
 
@@ -156,7 +156,8 @@ class MyApp(App):
         mainmessageContainer.append([self.newlabel, labelContainer, buttonBox])
 
         # Display the result of the pairing
-        pairing_return = pispi.init_pairing()
+        # pairing_return = pispi.init_pairing()
+        pairing_return = init_test()
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
@@ -261,7 +262,7 @@ class MyApp(App):
     def my_algorithm(self):
         while self.thread_alive_flag:
             self.my_thread_result = returntime()
-            
+
     def my_algorithm2(self):
         while self.thread_alive_flag:
             self.my_thread_result = myrandomfunction()
