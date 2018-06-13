@@ -168,7 +168,7 @@ class MyApp(App):
         self.process_label.set_text("No current process")
         self.do_gui_update()
 
-        t2 = threading.Thread(target=self.my_2algorithm)
+        t2 = threading.Thread(target=self.my_algorithm2)
         t2.start()
         #self.sensorlabel.set_text(self.my_thread_result2)
 
@@ -212,7 +212,7 @@ class MyApp(App):
         labelContainer.style['justify-content'] = 'space-around'
         labelContainer.style['background-color'] = '#BEBEBE'
         labelContainer.style['text-align'] = 'center'
-        labelContainer.append(self.sensorlabel)
+        labelContainer.append(self.onofflabel)
 
         button_ReturnToHome.set_on_click_listener(self.on_bt_pressed, tabbox, 0)
         button_ON.set_on_click_listener(self.turn_on_button, 2)
@@ -261,6 +261,10 @@ class MyApp(App):
     def my_algorithm(self):
         while self.thread_alive_flag:
             self.my_thread_result = returntime()
+            
+    def my_algorithm2(self):
+        while self.thread_alive_flag:
+            self.my_thread_result = myrandomfunction()
 
     def my_2algorithm(self):
         while self.thread_alive_flag:

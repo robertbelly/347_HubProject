@@ -3,11 +3,8 @@ import time, threading
 from datetime import datetime
 
 
-def myrandomfunction(decision):
-    if decision == 1:
-        while True:
-            return randint(1,9)
-    else: return "Nothing"
+def myrandomfunction():
+        return randint(69,73)
 
 
 def returntime():

@@ -232,7 +232,6 @@ class MyApp(App):
         self.newlabel2 = pairing_return
         if pairing_return:
             self.process_label.set_text("Pairing successful")
-            self.COUNTER = self.COUNTER + 1
             tabbox.add_tab(mainmessageContainer, "On/Off Module", None)
             self.onofflabel.set_text(self.my_thread_result)
         else:
@@ -268,7 +267,7 @@ class MyApp(App):
 
     def my_2algorithm(self):
         while self.thread_alive_flag:
-            self.my_thread_result2 = myrandomfunction(self.COUNTER)
+            self.my_thread_result2 = myrandomfunction()
             self.do_gui_update()
 
 
